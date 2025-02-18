@@ -1,0 +1,59 @@
+[gd_scene load_steps=11 format=3 uid="uid://u7v4mvvhbdro"]
+
+[ext_resource type="Texture2D" uid="uid://bbak8j3p6vljs" path="res://assets/explosion.png" id="1_36rwg"]
+[ext_resource type="Script" path="res://components/onetime_animated_effect.gd" id="1_onoxw"]
+[ext_resource type="AudioStream" uid="uid://brk53p7po8eaw" path="res://sounds/explosion_sound.wav" id="3_03a8v"]
+[ext_resource type="Script" path="res://components/variable_pitch_audio_stream_player.gd" id="4_l01n3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhll5"]
+atlas = ExtResource("1_36rwg")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvnuw"]
+atlas = ExtResource("1_36rwg")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oha1g"]
+atlas = ExtResource("1_36rwg")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vm7b1"]
+atlas = ExtResource("1_36rwg")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ncto0"]
+atlas = ExtResource("1_36rwg")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vxvli"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhll5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvnuw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oha1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm7b1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ncto0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="OnetimeAnimatedEffect" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_vxvli")
+autoplay = "default"
+script = ExtResource("1_onoxw")
+
+[node name="VariablePitchAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_03a8v")
+script = ExtResource("4_l01n3")
+auto_play_with_variance = true

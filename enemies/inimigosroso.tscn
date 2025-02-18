@@ -1,0 +1,125 @@
+[gd_scene load_steps=18 format=3 uid="uid://d2ukiyrysawc6"]
+
+[ext_resource type="PackedScene" uid="uid://4j24p1pgj2q8" path="res://enemies/enemies.tscn" id="1_6at24"]
+[ext_resource type="Texture2D" uid="uid://c6tkiposf14q8" path="res://assets/pink_enemy.png" id="2_4efk7"]
+[ext_resource type="Script" path="res://enemies/inimigosroso.gd" id="2_ho4io"]
+[ext_resource type="Script" path="res://components/state_component.gd" id="3_3lify"]
+[ext_resource type="Script" path="res://components/move_components.gd" id="4_1ut2a"]
+[ext_resource type="Script" path="res://components/border_bounce_component.gd" id="5_4nspb"]
+[ext_resource type="Script" path="res://components/timed_state_componoent.gd" id="6_tjbsm"]
+[ext_resource type="Script" path="res://components/spawner_component.gd" id="8_t2mu0"]
+[ext_resource type="PackedScene" uid="uid://bxquspl78j4pk" path="res://enemies/rosoprojetil.tscn" id="9_dx6jg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6apld"]
+atlas = ExtResource("2_4efk7")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ha2c"]
+atlas = ExtResource("2_4efk7")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01ldv"]
+atlas = ExtResource("2_4efk7")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_440la"]
+atlas = ExtResource("2_4efk7")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bji5"]
+atlas = ExtResource("2_4efk7")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bw5pn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6apld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ha2c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01ldv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_440la")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bji5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_napjb"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y84mw"]
+radius = 4.0
+
+[node name="enemies" instance=ExtResource("1_6at24")]
+script = ExtResource("2_ho4io")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_bw5pn")
+autoplay = "default"
+frame = 3
+frame_progress = 0.157118
+
+[node name="StatsComponent" parent="." index="1"]
+health = 25
+
+[node name="MoveComponent" parent="." index="2"]
+velocity = Vector2(0, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_napjb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_y84mw")
+
+[node name="ScoreComponent" parent="." index="12"]
+adjust_amount = 13
+
+[node name="States" type="Node" parent="." index="13"]
+
+[node name="MoveDState" type="Node" parent="States" index="0"]
+unique_name_in_owner = true
+script = ExtResource("6_tjbsm")
+duration = 2.0
+
+[node name="MoveComponent" type="Node" parent="States/MoveDState" index="0" node_paths=PackedStringArray("actor")]
+script = ExtResource("4_1ut2a")
+actor = NodePath("../../..")
+
+[node name="MoveSideState" type="Node" parent="States" index="1"]
+unique_name_in_owner = true
+script = ExtResource("6_tjbsm")
+duration = 3.0
+
+[node name="MovesideComponent" type="Node" parent="States/MoveSideState" index="0" node_paths=PackedStringArray("actor")]
+unique_name_in_owner = true
+script = ExtResource("4_1ut2a")
+actor = NodePath("../../..")
+velocity = Vector2(20, 0)
+
+[node name="BorderBounceComponent" type="Node" parent="States/MoveSideState" index="1" node_paths=PackedStringArray("actor", "move_component")]
+script = ExtResource("5_4nspb")
+actor = NodePath("../../..")
+move_component = NodePath("../MovesideComponent")
+
+[node name="FireState" type="Node" parent="States" index="2"]
+unique_name_in_owner = true
+script = ExtResource("3_3lify")
+
+[node name="SpawnerComponentdostiro" type="Node2D" parent="States/FireState" index="0"]
+unique_name_in_owner = true
+script = ExtResource("8_t2mu0")
+scene = ExtResource("9_dx6jg")
+
+[node name="PauseState" type="Node" parent="States" index="3"]
+unique_name_in_owner = true
+script = ExtResource("6_tjbsm")
+duration = 3.0

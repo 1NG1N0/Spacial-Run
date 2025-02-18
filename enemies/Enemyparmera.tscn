@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://dqicuurfr55i6"]
+
+[ext_resource type="PackedScene" uid="uid://4j24p1pgj2q8" path="res://enemies/enemies.tscn" id="1_xlf2k"]
+[ext_resource type="Texture2D" uid="uid://bol5vva0feocr" path="res://assets/green_enemy.png" id="2_bbmu3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_senml"]
+atlas = ExtResource("2_bbmu3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ok7g7"]
+atlas = ExtResource("2_bbmu3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2tuq"]
+atlas = ExtResource("2_bbmu3")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yt2je"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_senml")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ok7g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2tuq")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rn13u"]
+size = Vector2(16, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ora6r"]
+size = Vector2(12, 10)
+
+[node name="enemies" instance=ExtResource("1_xlf2k")]
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_yt2je")
+animation = &"move"
+autoplay = "move"
+frame_progress = 0.627497
+
+[node name="MoveComponent" parent="." index="2"]
+velocity = Vector2(0, 40)
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="3"]
+position = Vector2(4.17233e-07, 0.500001)
+scale = Vector2(0.8, 0.75)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_rn13u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_ora6r")

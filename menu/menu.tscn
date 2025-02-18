@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0fkl2jx3w5g4"]
+
+[ext_resource type="Script" path="res://menu/menu.gd" id="1_n178m"]
+[ext_resource type="PackedScene" uid="uid://lsmp51fhsfgq" path="res://effects/space_background.tscn" id="1_ngbmn"]
+[ext_resource type="LabelSettings" uid="uid://cejafwgr1cppx" path="res://fontes/title_label_settings.tres" id="2_eybym"]
+[ext_resource type="LabelSettings" uid="uid://b3olcbgcdq5rv" path="res://fontes/default_label.tres" id="4_442vy"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n178m")
+
+[node name="SpaceBackground" parent="." instance=ExtResource("1_ngbmn")]
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Spacial Run" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Spacial Run
+"
+label_settings = ExtResource("2_eybym")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "jogo feito nas coxa"
+label_settings = ExtResource("4_442vy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Aperte ENTER para começar "
+label_settings = ExtResource("4_442vy")
+horizontal_alignment = 1

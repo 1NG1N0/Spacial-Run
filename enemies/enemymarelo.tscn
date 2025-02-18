@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://7qxtx7pcyt0b"]
+
+[ext_resource type="PackedScene" uid="uid://4j24p1pgj2q8" path="res://enemies/enemies.tscn" id="1_u3qo1"]
+[ext_resource type="Script" path="res://enemies/enemymarelo.gd" id="2_5doob"]
+[ext_resource type="Texture2D" uid="uid://cy7xy63ka3tt1" path="res://assets/yellow_enemy.png" id="2_le5ye"]
+[ext_resource type="Script" path="res://components/border_bounce_component.gd" id="4_lt3q6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nsltc"]
+atlas = ExtResource("2_le5ye")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lbbl"]
+atlas = ExtResource("2_le5ye")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sys84"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nsltc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lbbl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tocmg"]
+size = Vector2(14, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4xd66"]
+size = Vector2(12, 8)
+
+[node name="enemies" instance=ExtResource("1_u3qo1")]
+script = ExtResource("2_5doob")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_sys84")
+autoplay = "default"
+
+[node name="StatsComponent" parent="." index="1"]
+health = 6
+
+[node name="MoveComponent" parent="." index="2"]
+velocity = Vector2(0, 15)
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="3"]
+position = Vector2(1.19209e-07, 4.76837e-07)
+scale = Vector2(0.7, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("RectangleShape2D_tocmg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+shape = SubResource("RectangleShape2D_4xd66")
+
+[node name="ScoreComponent" parent="." index="12"]
+adjust_amount = 7
+
+[node name="BorderBounceComponent" type="Node" parent="." index="13" node_paths=PackedStringArray("actor", "move_component")]
+script = ExtResource("4_lt3q6")
+actor = NodePath("..")
+move_component = NodePath("../MoveComponent")
