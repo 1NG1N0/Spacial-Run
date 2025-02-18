@@ -5,7 +5,7 @@ const TEST_SAVE_PATH = "res://save.cfg"
 
 @export var game_status: GameStats
 
-var save_path = TEST_SAVE_PATH
+var save_path = SAVE_PATH
 @onready var score_value: Label = %ScoreValue
 @onready var high_score_value: Label = %HighScoreValue
 
